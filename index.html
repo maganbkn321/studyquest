@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="theme-color" content="#101124">
+  <meta name="description" content="StudyQuest - Learn, Practice and Compete">
+
+  <title>StudyQuest | Learn & Compete</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app-container">
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">S</div>
+      <div>
+        <h1>StudyQuest</h1>
+        <span>LEARN • PLAY • COMPETE</span>
+      </div>
+    </div>
+
+    <button class="profile-btn" onclick="showProfile()">
+      👤
+    </button>
+  </header>
+
+
+  <!-- HOME SCREEN -->
+  <section id="homeScreen" class="screen active">
+
+    <div class="welcome-section">
+      <div>
+        <p class="small-text">WELCOME BACK, STUDENT 👋</p>
+        <h2>Ready to level up?</h2>
+        <p class="muted">Your next achievement starts today.</p>
+      </div>
+      <div class="welcome-icon">🚀</div>
+    </div>
+
+
+    <!-- STATS -->
+    <div class="stats-grid">
+
+      <div class="stat-card xp-card">
+        <span>⭐ Total XP</span>
+        <h2 id="totalXP">0</h2>
+        <small>Keep learning</small>
+      </div>
+
+      <div class="stat-card streak-card">
+        <span>🔥 Streak</span>
+        <h2 id="streakCount">0 Days</h2>
+        <small>Daily progress</small>
+      </div>
+
+    </div>
+
+
+    <!-- DAILY GOAL -->
+    <div class="section-heading">
+      <h3>Daily Goal 🎯</h3>
+      <span id="goalText">0 / 20 XP</span>
+    </div>
+
+    <div class="progress-card">
+      <div class="progress-track">
+        <div id="goalProgress" class="progress-fill"></div>
+      </div>
+      <p>Complete your daily learning goal!</p>
+    </div>
+
+
+    <!-- CONTINUE LEARNING -->
+    <div class="section-heading">
+      <h3>Start Learning</h3>
+      <span class="muted">Choose your exam</span>
+    </div>
+
+    <div class="featured-card">
+      <div>
+        <span class="featured-tag">FEATURED</span>
+        <h2>Rajasthan CET</h2>
+        <p>Prepare smartly. Practice daily.</p>
+        <button class="primary-btn" onclick="showExams()">
+          Explore Exams →
+        </button>
+      </div>
+      <div class="featured-icon">🏆</div>
+    </div>
+
+
+    <!-- EXAM CATEGORIES -->
+    <div class="section-heading">
+      <h3>Popular Exams</h3>
+      <span class="muted">View all →</span>
+    </div>
+
+    <div id="popularExams" class="exam-grid">
+
+      <button class="exam-card" onclick="selectExam('CET 12th Level')">
+        <span>📚</span>
+        <b>CET 12th</b>
+        <small>Senior Secondary</small>
+      </button>
+
+      <button class="exam-card" onclick="selectExam('CET Graduation Level')">
+        <span>🎓</span>
+        <b>CET Graduate</b>
+        <small>Graduation Level</small>
+      </button>
+
+      <button class="exam-card" onclick="selectExam('Patwari')">
+        <span>📋</span>
+        <b>Patwari</b>
+        <small>Rajasthan Exam</small>
+      </button>
+
+      <button class="exam-card" onclick="selectExam('LDC')">
+        <span>💻</span>
+        <b>LDC</b>
+        <small>Clerk Exam</small>
+      </button>
+
+      <button class="exam-card" onclick="selectExam('Rajasthan Police')">
+        <span>👮</span>
+        <b>Police</b>
+        <small>Rajasthan Police</small>
+      </button>
+
+      <button class="exam-card" onclick="showExams()">
+        <span>➕</span>
+        <b>More Exams</b>
+        <small>Explore all</small>
+      </button>
+
+    </div>
+
+
+    <!-- DAILY CHALLENGE -->
+    <div class="challenge-card">
+      <div>
+        <span class="featured-tag">DAILY CHALLENGE</span>
+        <h3>Today's Challenge ⚡</h3>
+        <p>Complete a quiz and earn XP.</p>
+      </div>
+      <button class="challenge-btn" onclick="showExams()">
+        Start →
+      </button>
+    </div>
+
+  </section>
+
+
+  <!-- EXAM SCREEN -->
+  <section id="examScreen" class="screen hidden">
+
+    <div class="page-heading">
+      <button class="back-btn" onclick="goHome()">← Back</button>
+      <h2>Choose Your Exam</h2>
+      <p>Select an exam to continue learning.</p>
+    </div>
+
+    <div id="examList" class="exam-list"></div>
+
+  </section>
+
+
+  <!-- SUBJECT SCREEN -->
+  <section id="subjectScreen" class="screen hidden">
+
+    <div class="page-heading">
+      <button class="back-btn" onclick="showExams()">← Back</button>
+      <h2>Choose Subject 📚</h2>
+      <p id="selectedExamName">Select your subject</p>
+    </div>
+
+    <div id="subjectList" class="subject-list"></div>
+
+  </section>
+
+
+  <!-- TOPIC SCREEN -->
+  <section id="topicScreen" class="screen hidden">
+
+    <div class="page-heading">
+      <button class="back-btn" onclick="showSubjects()">← Back</button>
+      <h2>Choose Topic 📖</h2>
+      <p id="selectedSubjectName">Select your topic</p>
+    </div>
+
+    <div id="topicList" class="topic-list"></div>
+
+  </section>
+
+
+  <!-- QUIZ SETTINGS SCREEN -->
+  <section id="settingsScreen" class="screen hidden">
+
+    <div class="page-heading">
+      <button class="back-btn" onclick="showTopics()">← Back</button>
+      <h2>Test Settings ⚙️</h2>
+      <p>Customize your practice test.</p>
+    </div>
+
+    <div class="settings-card">
+
+      <h3 id="settingsTopic">Selected Topic</h3>
+
+      <label for="questionCount">Number of Questions</label>
+      <select id="questionCount">
+        <option value="10">10 Questions</option>
+        <option value="20">20 Questions</option>
+        <option value="30">30 Questions</option>
+        <option value="50">50 Questions</option>
+      </select>
+
+      <label for="testDuration">Time Limit</label>
+      <select id="testDuration">
+        <option value="10">10 Minutes</option>
+        <option value="20">20 Minutes</option>
+        <option value="30">30 Minutes</option>
+        <option value="60">60 Minutes</option>
+      </select>
+
+      <label for="negativeMarking">Negative Marking</label>
+      <select id="negativeMarking">
+        <option value="0">No Negative Marking</option>
+        <option value="0.25">1/4 Negative</option>
+        <option value="0.33">1/3 Negative</option>
+        <option value="0.5">1/2 Negative</option>
+      </select>
+
+      <button class="primary-btn full-btn" onclick="beginTest()">
+        Start Quiz 🚀
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- QUIZ SCREEN -->
+  <section id="quizScreen" class="screen hidden">
+
+    <div class="quiz-header">
+      <button class="back-btn" onclick="confirmExit()">✕ Exit</button>
+      <div class="timer-box">⏱️ <span id="timer">00:00</span></div>
+    </div>
+
+    <div class="quiz-progress-info">
+      <span id="questionNumber">Question 1</span>
+      <span id="answeredCount">0 Answered</span>
+    </div>
+
+    <div class="progress-track">
+      <div id="quizProgress" class="progress-fill"></div>
+    </div>
+
+    <div class="question-card">
+
+      <div class="question-meta">
+        <span id="quizSubject">Subject</span>
+        <span>MCQ</span>
+      </div>
+
+      <h2 id="questionText">Question will appear here.</h2>
+
+      <div id="optionsList" class="options-list"></div>
+
+      <div id="explanationBox" class="explanation hidden"></div>
+
+    </div>
+
+    <div class="quiz-actions">
+      <button id="previousBtn" class="secondary-btn" onclick="previousQuestion()">
+        ← Previous
+      </button>
+
+      <button id="nextBtn" class="primary-btn" onclick="nextQuestion()">
+        Next →
+      </button>
+    </div>
+
+    <button class="submit-btn" onclick="submitTest()">
+      Submit Test
+    </button>
+
+  </section>
+
+
+  <!-- RESULT SCREEN -->
+  <section id="resultScreen" class="screen hidden">
+
+    <div class="result-header">
+      <div class="result-icon">🏆</div>
+      <h2>Quiz Completed!</h2>
+      <p>Every question makes you better.</p>
+    </div>
+
+    <div class="result-card">
+
+      <div class="score-circle">
+        <h1 id="finalScore">0</h1>
+        <span>Marks</span>
+      </div>
+
+      <div class="result-stats">
+
+        <div>
+          <span>✅ Correct</span>
+          <b id="correctCount">0</b>
+        </div>
+
+        <div>
+          <span>❌ Wrong</span>
+          <b id="wrongCount">0</b>
+        </div>
+
+        <div>
+          <span>⭕ Skipped</span>
+          <b id="skippedCount">0</b>
+        </div>
+
+        <div>
+          <span>📊 Accuracy</span>
+          <b id="accuracyValue">0%</b>
+        </div>
+
+      </div>
+
+      <div class="xp-earned">
+        ⭐ You earned <b id="earnedXP">0 XP</b>
+      </div>
+
+    </div>
+
+    <button class="primary-btn full-btn" onclick="restartTest()">
+      🔄 Try Again
+    </button>
+
+    <button class="secondary-btn full-btn" onclick="goHome()">
+      🏠 Back to Home
+    </button>
+
+  </section>
+
+
+  <!-- PROFILE SCREEN -->
+  <section id="profileScreen" class="screen hidden">
+
+    <div class="page-heading">
+      <button class="back-btn" onclick="goHome()">← Back</button>
+      <h2>My Profile 👤</h2>
+      <p>Your learning journey.</p>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-avatar">👨‍🎓</div>
+      <h2>Student</h2>
+      <p>StudyQuest Learner</p>
+
+      <div class="profile-stats">
+        <div>
+          <b id="profileXP">0</b>
+          <span>Total XP</span>
+        </div>
+        <div>
+          <b id="profileStreak">0</b>
+          <span>Streak</span>
+        </div>
+        <div>
+          <b id="profileTests">0</b>
+          <span>Tests</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- BOTTOM NAVIGATION -->
+  <nav class="bottom-nav">
+
+    <button class="nav-item active" onclick="goHome()">
+      <span>🏠</span>
+      <small>Home</small>
+    </button>
+
+    <button class="nav-item" onclick="showExams()">
+      <span>📚</span>
+      <small>Learn</small>
+    </button>
+
+    <button class="nav-item" onclick="showProfile()">
+      <span>👤</span>
+      <small>Profile</small>
+    </button>
+
+  </nav>
+
+</div>
+
+
+<!-- SCRIPTS: Keep this order -->
+<script src="data.js"></script>
+<script src="questions.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
